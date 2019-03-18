@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %} User Details {% endblock %}
+{% block body %}
+<h1>{{ user.Username }}</h1>
+<p>{{ user.Useremail }}</p>
+<p>{{ user.Userstatus }}</p>
+<hr>
+<a href="/user/index">Go Back</a>
+{% endblock %}
+

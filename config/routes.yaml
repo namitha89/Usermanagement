@@ -1,0 +1,3 @@
+#index:
+#    path: /category/index
+#    controller: App\Controller\CategoryController::index

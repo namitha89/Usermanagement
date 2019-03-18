@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %} Groups {% endblock title %}
+{% block body %}
+<h1> List of Group </h1>
+<a href="category/new" style="margin-left:900px;" class="btn btn-dark">Create Group</a>
+<p></p>
+
+{% if categories %}
+  <div id="result"></div>
+  <table id="category" class="table table-striped">
+   <thead>
+       <tr>
+           <th>Groups</th>
+           <th>Actions</th>
+        </tr>
+   </thead>
+   <tbody>
+    	{% for cat in categories %} 
+	
+          <tr>
+            <td>{{ cat.Categoryname }}</td>
+	    <td>
+              <a href="show/{{ cat.id }}" class="btn btn-dark">Show</a>
+              <a href="category/edit/{{ cat.id }}" class="btn btn-dark">Update</a>
+              <a href="#" class="btn btn-danger delete-category" data-id="{{ cat.id }}">Delete</a>
+
+            </td>
+          </tr>
+	{% endfor %}
+   </tbody>
+  </table>
+{% else %}
+  <p>No category to display</p>
+{% endif %}
+
+{% endblock %}	
+{% block stylesheets %}
+{% endblock %}
+{% block javascripts %}
+ <script src="/js/main.js"></script>
+{% endblock %}
+

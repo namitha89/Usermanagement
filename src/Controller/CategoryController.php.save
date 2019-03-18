@@ -1,0 +1,43 @@
+<?php
+ namespace App\Controller;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
+ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+ use App\Entity\Category;
+
+
+
+ class CategoryController extends Controller {
+
+	/**
+	* @Route("/")
+	* @Method({"GET","POST"})
+	*/
+
+	public function index(){
+
+            $categories = ['Category 1','Category 2'];
+
+	    return $this->render('usermanagement/category.html.twig',array
+            ('categories' => $categories));
+	}
+	/**
+	*@Route("/category/save") 
+        */
+	
+	public function save(){
+	  $entityManager = $this->getDoctrine()->getManager();
+          
+          $category = new Category(); 
+         
+          $category->setCategoryname('cat1');
+          $category->setCategorystatus('Active');
+          $category->setCategorysta($now);
+          $entityManager->persist($category);
+	  $entityManager->flush();
+	  // return new Response("saved");
+          return new Response('Saved an category with the id of',$category->getId);
+	}
+
+ }

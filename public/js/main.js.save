@@ -1,0 +1,10 @@
+const ca = document.getElementById('category');
+alert(ca);
+if(ca){
+  ca	.addEventListener('click', e => {
+      if(e.target.className == 'btn btn-danager delete-category'){
+           alert('jhk');
+	}
+   });
+}
+

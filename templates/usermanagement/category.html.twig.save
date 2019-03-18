@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %} Add Category Form{% endblock title %}
+{% block body %}
+<h1>Add Category Form</h1>
+<div> </div>
+
+{% endblock %}	
+{% block stylesheets %{% endblock %}
+
