@@ -18,16 +18,21 @@
  class CategoryController extends Controller {
 
 	/**
-	* @Route("/",name="group_list")
+	* @Route("/",name="home_page")
 	* @Method({"GET","POST"})
 	*/
 
 	public function index(){
+            
+             $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    	     $admin = $this->getUser();
+             if($admin){
 
             $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
              
 	    return $this->render('usermanagement/category.html.twig',array
             ('categories' => $categories));
+           }
 	}
 	/**
         *@Route("/show/{id}",name ="category_show")
@@ -35,17 +40,24 @@
 	
 	public function show($id){
            
-           
+           $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+
 	   $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 	   
            return $this->render('usermanagement/show.html.twig',array('category'=> $category));
-
+	  }
 	}
         /**
         *@Route("/category/new")
         */
         public function new(Request $request)
         {
+          $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+
 	  $category = new Category();
            $form = $this->createFormBuilder($category)
                    ->add('Categoryname', TextType::class,array('label' => 'Create Group','attr' => array('class' => 'form-control')))
@@ -69,19 +81,22 @@
               $entityManager->persist($category);
 	      $entityManager->flush();
               
-              return $this->redirecttoroute('group_list');
+              return $this->redirecttoroute('home_page');
            }
 	  return $this->render('usermanagement/new.html.twig',array(
                 'form' => $form->createView()
                 ));          
-
+	 }
         }
 	/**
         *@Route("/category/edit/{id}")
         */
         public function edit(Request $request, $id)
         {
-		
+	  $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+	
           $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
            $form = $this->createFormBuilder($category)
                    ->add('Categoryname', TextType::class,array('label' => 'Create Group','attr' => array('class' => 'form-control')))
@@ -104,12 +119,12 @@
               $entityManager = $this->getDoctrine()->getManager();
               $entityManager->flush();
 
-              return $this->redirecttoroute('group_list');
+              return $this->redirecttoroute('home_page');
            }
           return $this->render('usermanagement/edit.html.twig',array(
                 'form' => $form->createView()
                 ));
-
+	  }
         }
 
         /**
@@ -118,7 +133,10 @@
         */
 
 	public function delete(){
-	   
+	   $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+
            $id =  $_POST['id'];
            $users = $this->getDoctrine()->getRepository(Users::class)->findOneBy(array('category'=>$id));
            
@@ -135,7 +153,7 @@
            }
            
            
-      
+           }
           
         }
 

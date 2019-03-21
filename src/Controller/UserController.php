@@ -22,11 +22,15 @@ class UserController extends Controller{
 
         public function index(){
            
+           $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
 
             $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
 	  
             return $this->render('usermanagement/users.html.twig',array
             ('users' => $users));
+          }
         }
         
          /**
@@ -34,6 +38,10 @@ class UserController extends Controller{
         */
         public function new(Request $request)
         {
+          $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+
 	  $em = $this->getDoctrine()->getManager();
             
           $user = new Users();
@@ -84,7 +92,7 @@ class UserController extends Controller{
           return $this->render('usermanagement/newuser.html.twig',array(
                 'form' => $form->createView()
                 ));
-
+           }
         }
 
         /**
@@ -104,6 +112,10 @@ class UserController extends Controller{
         */
         public function edit(Request $request, $id)
         {
+          $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
+
           $groups = $this->getDoctrine()->getRepository(Category::class)->findAll();
 	
            $groupchoices = array();
@@ -153,7 +165,7 @@ class UserController extends Controller{
            return $this->render('usermanagement/edituser.html.twig',array(
                 'form' => $form->createView()
                 ));
-
+            }
         }
 
         /**
@@ -162,6 +174,9 @@ class UserController extends Controller{
         */
 
         public function delete(){
+          $this->denyAccessUnlessGranted('ROLE_ADMIN');
+             $admin = $this->getUser();
+             if($admin){
 
            $id =  $_POST['id'];
            $user = $this->getDoctrine()->getRepository(Users::class)->find($id);
@@ -170,7 +185,7 @@ class UserController extends Controller{
            $entityManager->remove($user);
            $entityManager->flush();
            return new Response("Saved");
-
+           }
 
 
         }
